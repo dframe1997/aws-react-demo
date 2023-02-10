@@ -1,5 +1,13 @@
 # React-shop-cloudfront
 
+## Cloudfront URL
+https://d3cncxirc76xst.cloudfront.net/
+
+## S3 Static Site URL
+TODO
+
+## Overview
+
 This is frontend starter project for nodejs-aws mentoring program. It uses the following technologies:
 
 - [Vite](https://vitejs.dev/) as a project bundler
@@ -69,3 +77,40 @@ Combination of `cloudfront:setup` and `cloudfront:build:deploy` commands with or
 ### `serverless:remove`
 
 Remove an entire stack configured in `serverless.yml` via CloudFormation.
+
+<!--
+title: 'AWS NodeJS Example'
+description: 'This template demonstrates how to deploy a NodeJS function running on AWS Lambda using the traditional Serverless Framework.'
+layout: Doc
+framework: v3
+platform: AWS
+language: nodeJS
+priority: 1
+authorLink: 'https://github.com/serverless'
+authorName: 'Serverless, inc.'
+authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
+-->
+
+
+# Serverless Framework
+
+## Usage
+
+### Deployment
+
+In order to deploy the project, you need to run the following command:
+
+```
+$ serverless deploy
+```
+
+After running deploy, you should see output similar to:
+
+```bash
+Deploying aws-node-project to stage dev (us-east-1)
+
+✔ Service deployed to stack aws-node-project-dev (112s)
+
+functions:
+  hello: aws-node-project-dev-hello (1.5 kB)
+```
