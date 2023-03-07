@@ -6,6 +6,10 @@ https://d3cncxirc76xst.cloudfront.net/
 ## S3 Static Site URL
 TODO
 
+## HTTP Endpoints for Product API
+- https://8s6wue4ha0.execute-api.us-east-1.amazonaws.com/products
+- https://8s6wue4ha0.execute-api.us-east-1.amazonaws.com/products/{id}
+
 ## Overview
 
 This is frontend starter project for nodejs-aws mentoring program. It uses the following technologies:

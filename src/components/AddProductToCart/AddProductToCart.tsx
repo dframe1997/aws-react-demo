@@ -11,8 +11,11 @@ type AddProductToCartProps = {
 };
 
 export default function AddProductToCart({ product }: AddProductToCartProps) {
-  const { data = [], isFetching } = useCart();
-  const { mutate: upsertCart } = useUpsertCart();
+  // const { data = [], isFetching } = useCart();
+  const data = [];
+  const isFetching = false;
+  // const { mutate: upsertCart } = useUpsertCart();
+  const upsertCart = () => null;
   const invalidateCart = useInvalidateCart();
   const cartItem = data.find((i) => i.product.id === product.id);
 

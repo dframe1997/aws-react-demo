@@ -19,6 +19,7 @@ export default function ProductsTable() {
   const { mutate: deleteAvailableProduct } = useDeleteAvailableProduct();
   const invalidateAvailableProducts = useInvalidateAvailableProducts();
 
+  console.log("data: ", data)
   return (
     <TableContainer component={Paper}>
       <Table aria-label="simple table">
@@ -33,21 +34,21 @@ export default function ProductsTable() {
         </TableHead>
         <TableBody>
           {data.map((product) => (
-            <TableRow key={product.id}>
+            <TableRow key={product.id.N}>
               <TableCell component="th" scope="row">
-                {product.title}
+                {product.title.S}
               </TableCell>
-              <TableCell align="right">{product.description}</TableCell>
+              <TableCell align="right">{product.description.S}</TableCell>
               <TableCell align="right">
-                {formatAsPrice(product.price)}
+                {formatAsPrice(product.price.N)}
               </TableCell>
-              <TableCell align="right">{product.count}</TableCell>
+              <TableCell align="right">{product.count.N}</TableCell>
               <TableCell align="right">
                 <Button
                   size="small"
                   color="primary"
                   component={Link}
-                  to={`/admin/product-form/${product.id}`}
+                  to={`/admin/product-form/${product.id.N}`}
                 >
                   Manage
                 </Button>
@@ -55,8 +56,8 @@ export default function ProductsTable() {
                   size="small"
                   color="secondary"
                   onClick={() => {
-                    if (product.id) {
-                      deleteAvailableProduct(product.id, {
+                    if (product.id.N) {
+                      deleteAvailableProduct(product.id.N, {
                         onSuccess: invalidateAvailableProducts,
                       });
                     }
