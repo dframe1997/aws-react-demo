@@ -2,11 +2,19 @@
 
 ## Cloudfront URL
 
-https://d3cncxirc76xst.cloudfront.net/
+The cloudfront distribution is E1C7ZT61TX4AOY.
+https://d1qmcopdquxbi8.cloudfront.net/
 
 ## S3 Static Site URL
 
 https://aws-react-demo-djf.s3.amazonaws.com/index.html
+
+## Getting started
+
+Run the project locally using `npm i`, followed by `npm start`.
+Deploy using `npm run client:build:deploy`. This will update the files in the bucket, so the S3 static site URL above will show the changes. However to update the cloudfront version, the cache needs to be invalidated. This can be done online via the AWS Console, or with `npm run cloudfront:build:deploy`. The latter command will
+invalidate the cloudfront cache after the build and push process, making the
+cloudfront app update it's cached static content.
 
 ## Overview
 
