@@ -1,23 +1,33 @@
 import Typography from "@mui/material/Typography";
 import { Product } from "~/models/Product";
-import CartIcon from "@mui/icons-material/ShoppingCart";
+import SyncIcon from "@mui/icons-material/Sync";
 import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
 import IconButton from "@mui/material/IconButton";
 import { useCart, useInvalidateCart, useUpsertCart } from "~/queries/cart";
+import { CartItem } from "~/models/CartItem";
+import { useEffect, useState } from "react";
 
 type AddProductToCartProps = {
   product: Product;
 };
 
 export default function AddProductToCart({ product }: AddProductToCartProps) {
-  // const { data = [], isFetching } = useCart();
-  const data = [];
-  const isFetching = false;
-  // const { mutate: upsertCart } = useUpsertCart();
-  const upsertCart = () => null;
+  const { data = [], isFetching } = useCart();
+  const { mutate: upsertCart } = useUpsertCart();
   const invalidateCart = useInvalidateCart();
-  const cartItem = data.find((i) => i.product.id === product.id);
+  const [cartItem, setCartItem] = useState<CartItem | null>(null);
+
+  useEffect(() => {
+    if (!isFetching) {
+      console.log("CART DATA: ", data);
+      const item = data.find((i) => i.product.id === product.id);
+      if (item) {
+        console.log("SETTING ITEM");
+        setCartItem(item);
+      }
+    }
+  }, [isFetching]);
 
   const addProduct = () => {
     upsertCart(
@@ -35,19 +45,23 @@ export default function AddProductToCart({ product }: AddProductToCartProps) {
     }
   };
 
-  return cartItem ? (
+  return isFetching ? (
+    <IconButton disabled={isFetching} size="large">
+      <SyncIcon color={"primary"} />
+    </IconButton>
+  ) : (
     <>
-      <IconButton disabled={isFetching} onClick={removeProduct} size="large">
+      <IconButton
+        disabled={(cartItem && cartItem.count < 1) || !cartItem}
+        onClick={removeProduct}
+        size="large"
+      >
         <Remove color={"secondary"} />
       </IconButton>
-      <Typography align="center">{cartItem.count}</Typography>
-      <IconButton disabled={isFetching} onClick={addProduct} size="large">
+      <Typography align="center">{cartItem ? cartItem.count : 0}</Typography>
+      <IconButton onClick={addProduct} size="large">
         <Add color={"secondary"} />
       </IconButton>
     </>
-  ) : (
-    <IconButton disabled={isFetching} onClick={addProduct} size="large">
-      <CartIcon color={"secondary"} />
-    </IconButton>
   );
 }

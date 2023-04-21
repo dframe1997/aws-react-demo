@@ -1,12 +1,15 @@
 # React-shop-cloudfront
 
 ## Cloudfront URL
-https://d3cncxirc76xst.cloudfront.net/
+
+https://d3aok6mn3nqbd9.cloudfront.net/
 
 ## S3 Static Site URL
-TODO
+
+https://aws-react-demo-djf.s3-website-us-east-1.amazonaws.com/
 
 ## HTTP Endpoints for Product API
+
 - https://8s6wue4ha0.execute-api.us-east-1.amazonaws.com/products
 - https://8s6wue4ha0.execute-api.us-east-1.amazonaws.com/products/{id}
 
@@ -94,7 +97,6 @@ authorLink: 'https://github.com/serverless'
 authorName: 'Serverless, inc.'
 authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
 -->
-
 
 # Serverless Framework
 
