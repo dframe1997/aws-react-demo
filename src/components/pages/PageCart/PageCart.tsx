@@ -12,6 +12,7 @@ import Box from "@mui/material/Box";
 import { useCart, useInvalidateCart } from "~/queries/cart";
 import AddressForm from "~/components/pages/PageCart/components/AddressForm";
 import { useSubmitOrder } from "~/queries/orders";
+import { CartItem } from "~/models/CartItem";
 
 enum CartStep {
   ReviewCart,
