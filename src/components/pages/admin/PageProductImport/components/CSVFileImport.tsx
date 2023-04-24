@@ -29,6 +29,8 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
 
   const uploadFile = async () => {
     console.log("uploadFile to", url);
+    console.log("USERNAME: ", "dframe1997");
+    console.log("PASSWORD: ", "TEST_PASSWORD");
     const authorization_token = localStorage.getItem("authorization_token");
     const token = authorization_token
       ? authorization_token
