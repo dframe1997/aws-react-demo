@@ -1,13 +1,9 @@
 service: aws-node-project
 frameworkVersion: "3"
-# useDotenv: true
 
 provider:
   name: aws
   runtime: nodejs18.x
-  # environment:
-  #   USERNAME: ${env:USERNAME}
-  #   PASSWORD: ${env:PASSWORD}
 
   iamRoleStatements:
     - Effect: "Allow"
@@ -22,10 +18,9 @@ provider:
 
 plugins:
   - serverless-finch
-  # Removed serverless-single-page-app plugin as it hasn't been updated in 2 years and was using
-  # ACLs which are not reccomended by AWS docs. It also seems to serve a very similar function
-  # to serverless-finch and the deployment works fine without it. Happy to discuss this if I have
-  # misunderstood.
+  # Removed serverless-single-page-app plugin as it hasn't been updated in 2 years and was causing
+  # some issues. It also seems to serve a very similar function to serverless-finch and the deployment
+  # works fine without it. Happy to discuss this if I have misunderstood!
 
 custom:
   s3BucketName: ${self:custom.client.bucketName}
