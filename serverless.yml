@@ -1,28 +1,35 @@
 service: aws-node-project
 frameworkVersion: "3"
-useDotenv: true
+# useDotenv: true
 
 provider:
   name: aws
   runtime: nodejs18.x
-  environment:
-    USERNAME: ${env:USERNAME}
-    PASSWORD: ${env:PASSWORD}
+  # environment:
+  #   USERNAME: ${env:USERNAME}
+  #   PASSWORD: ${env:PASSWORD}
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:PutObject"
+        - "s3:GetObject"
+      Resource: "arn:aws:s3:::*/*"
+    - Effect: "Allow"
+      Action:
+        - "s3:ListBucket"
+      Resource: "arn:aws:s3:::*"
 
 plugins:
   - serverless-finch
-  - serverless-single-page-app-plugin
 
 custom:
+  s3BucketName: ${self:custom.client.bucketName}
   ## Serverless-finch configuration
   client:
     bucketName: aws-react-demo-djf
     distributionFolder: dist
-    indexDocument: index.html
     manageResources: false
-  ## Serverless-single-page-app-plugin configuration:
-  s3LocalPath: ${self:custom.client.distributionFolder}/
-  s3BucketName: ${self:custom.client.bucketName}
 
 # you can add CloudFormation resource templates here
 resources:
@@ -31,15 +38,15 @@ resources:
     WebAppS3Bucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self:custom.s3BucketName}
         # AccessControl: PublicRead
+        BucketName: ${self:custom.s3BucketName}
         WebsiteConfiguration:
           IndexDocument: index.html
           ErrorDocument: index.html
         # VersioningConfiguration:
         #   Status: Enabled
 
-    ## Specifying the policies to make sure all files inside the Bucket are avaialble to CloudFront
+    ## Specifying the policies to make sure all files inside the Bucket are available to CloudFront and the public
     WebAppS3BucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
@@ -47,16 +54,12 @@ resources:
           Ref: WebAppS3Bucket
         PolicyDocument:
           Statement:
-            - Sid: "AllowCloudFrontAccessIdentity"
+            - Sid: PublicReadGetObject
               Effect: Allow
-              Action: s3:GetObject
+              Principal: "*"
+              Action:
+                - s3:GetObject
               Resource: arn:aws:s3:::${self:custom.s3BucketName}/*
-              Principal:
-                AWS:
-                  Fn::Join:
-                    - " "
-                    - - "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity"
-                      - !Ref OriginAccessIdentity
 
     OriginAccessIdentity:
       Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
