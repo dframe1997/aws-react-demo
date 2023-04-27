@@ -2,9 +2,8 @@
 
 ## Cloudfront URL
 
-https://d3cncxirc76xst.cloudfront.net/
 The cloudfront distribution is E1C7ZT61TX4AOY.
-https://d1qmcopdquxbi8.cloudfront.net/
+https://d3so2qa169g1ye.cloudfront.net
 
 ## S3 Static Site URL
 
