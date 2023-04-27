@@ -3,11 +3,11 @@
 ## Cloudfront URL
 
 The cloudfront distribution is E1C7ZT61TX4AOY.
-https://d1qmcopdquxbi8.cloudfront.net/
+https://d3so2qa169g1ye.cloudfront.net
 
 ## S3 Static Site URL
 
-https://aws-react-demo-djf.s3.amazonaws.com/index.html
+https://aws-react-demo-djf.s3.amazonaws.com/
 
 ## Getting started
 
