@@ -11,6 +11,7 @@ node_modules
 .serverless
 coverage
 dist
+.env
 dist-ssr
 *.local
 
