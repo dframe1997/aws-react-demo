@@ -27,6 +27,20 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
     setFile(undefined);
   };
 
+  async function putFile(url: string, file, token) {
+    try {
+      const response = await axios.post(url, file, {
+        headers: {
+          Authorization: `Basic ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(response);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   const uploadFile = async () => {
     console.log("uploadFile to", url);
     // Can't use env variables in S3 Static websites, so need to hard code since we don't have a login system.
@@ -40,7 +54,7 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
       localStorage.setItem("authorization_token", token);
 
       // Get the presigned URL
-      await axios({
+      const signedURL = await axios({
         method: "GET",
         url,
         headers: {
@@ -50,6 +64,8 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
           fileName: encodeURIComponent(file.name),
         },
       });
+      console.log("SURL: ", signedURL.data.url);
+      const uploaded = await putFile(signedURL.data.url, file, token);
       removeFile();
     }
   };
