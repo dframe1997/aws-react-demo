@@ -23,14 +23,9 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
     setFile(undefined);
   };
 
-  async function putFile(url: string, file, token) {
+  async function putFile(url: string, file) {
     try {
-      const response = await axios.post(url, file, {
-        headers: {
-          Authorization: `Basic ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(url, file);
       console.log(response);
     } catch (e) {
       console.error(e);
@@ -38,30 +33,17 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
   }
 
   const uploadFile = async () => {
-    console.log("uploadFile to", url);
-    // Can't use env variables in S3 Static websites, so need to hard code since we don't have a login system.
-    // console.log("USERNAME: ", process.env.USERNAME);
-    // console.log("PASSWORD: ", process.env.PASSWORD);
     if (file) {
-      const tokenFromStorage = localStorage.getItem("authorization_token");
-      const token = tokenFromStorage
-        ? tokenFromStorage
-        : createToken("dframe1997", "TEST_PASSWORD");
-      localStorage.setItem("authorization_token", token);
-
       // Get the presigned URL
       const signedURL = await axios({
         method: "GET",
         url,
-        headers: {
-          Authorization: `Basic ${token}`,
-        },
         params: {
           fileName: encodeURIComponent(file.name),
         },
       });
       console.log("SURL: ", signedURL.data.url);
-      const uploaded = await putFile(signedURL.data.url, file, token);
+      const uploaded = await putFile(signedURL.data.url, file);
       removeFile();
     }
   };
